@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+Add Expence{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form action="" method="post">
+                {% csrf_token %}
+                  <legend class="mt-4">Add Expence</legend>
+                  <div class="form-group">
+                    <label class="form-label mt-4">Expence_title</label>
+                    <input type="text" class="form-control" placeholder="Enter Expence" name="title">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label mt-4">Amount</label>
+                    <input type="text" class="form-control" placeholder="Enter Amout" name="amount">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleSelect1" class="form-label mt-4">Customer Name</label>
+                    <select class="form-select" name="cname">
+                        {% for n in names %}
+                      <option>{{n.name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                  </div>
+                </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+{% endblock %}

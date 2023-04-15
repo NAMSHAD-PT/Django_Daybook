@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+Edit Expence{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form action="" method="post">
+                {% csrf_token %}
+                  <legend class="mt-4">Edit Expence</legend>
+                  <div class="form-group">
+                    <label class="form-label mt-4">Expence_title</label>
+                    <input type="text" class="form-control" placeholder="Enter Expence" name="title" value="{{edit.expence}}">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label mt-4">Amount</label>
+                    <input type="text" class="form-control" placeholder="Enter Amout" name="amount" value="{{edit.amount}}">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleSelect1" class="form-label mt-4">Customer Name</label>
+                    <select class="form-select" name="cname">
+                        
+                      <option>{{edit.c_name}}</option>
+                      
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                  </div>
+                </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+{% endblock %}
