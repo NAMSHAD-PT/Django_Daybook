@@ -7,6 +7,14 @@ home
 
 <!-- Customer table view -->
 <div class="container">
+  {% if messages %}
+                  {% for message in messages %}
+
+                  <p class="text-warning">{{message.warning}}</p>
+                  
+
+                  {% endfor %}
+                  {% endif %}
     <h3>Contact Details</h3>
     <a class="btn btn-warning mt-2" href="{% url 'addcontact' %}">Add Contact</a>
 

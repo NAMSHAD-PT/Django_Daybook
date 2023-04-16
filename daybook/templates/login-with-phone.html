@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form action="" method="post">
+                {% csrf_token %}
+                  <legend class="mt-4">Login With Phone_number</legend>
+                  {% csrf_token %}
+                  {% if messages %}
+                  {% for message in messages %}
+
+                  <p class="text-danger">{{message}}</p>
+                  <p class="text-warning">{{message.info}}</p>
+                  
+
+                  {% endfor %}
+                  {% endif %}
+                  <div class="form-group">
+                    <label class="form-label mt-4">phone number</label>
+                    <input type="text" class="form-control" placeholder="phone number" name="phone_number">
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" name="methodOtp" class="btn btn-primary mt-4" value="Login">
+                  </div>
+                </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+{% endblock %}

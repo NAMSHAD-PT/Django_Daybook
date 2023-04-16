@@ -23,25 +23,28 @@
                   <span class="visually-hidden">(current)</span>
                 </a>
               </li>
-              {% if user.is_authenticated %}
+              <!-- {% if user.is_authenticated %} -->
               
                   <li class="nav-item">
                     <a class="nav-link" href="">Customers</a>
                   </li>
-              {% else %}
+              <!-- {% else %} -->
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Login</a>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Lphone' %}">Login-with-Phone</a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link" href="{% url 'register' %}">Register</a>
                   </li>
-              {% endif %}
+              <!-- {% endif %} -->
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'addcontact' %}">Add Customer</a>
               </li>
 
             </ul>
-            {% if user.is_authenticated %}
+            <!-- {% if user.is_authenticated %} -->
             
             <div class="d-flex .w-suto">
                 <h3><a  class="btn btn-outline-warning mx-auto" href="{% url 'logout' %}">Logout</a>
@@ -51,7 +54,7 @@
                 <h3><a class="nav-link active text-white" href="#">{{user.username}}</a></h3>
 
             </div>
-            {% endif %}
+            <!-- {% endif %} -->
           </div>
         </div>
       </nav>

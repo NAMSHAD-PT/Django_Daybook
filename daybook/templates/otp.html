@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form action="/otp/{{id}}/" method="post">
+                {% csrf_token %}
+                  <legend class="mt-4">OTP</legend>
+                  <div class="form-group">
+                    <label class="form-label mt-4">otp number</label>
+                    <input type="text" class="form-control" placeholder="phone number" name="otp">
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" class="btn btn-primary mt-4">
+                  </div>
+                </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+
+{% endblock %}

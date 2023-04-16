@@ -2,8 +2,11 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
-from .models import Customer,Expences
-from .froms import RegistrationForm,UserCreationForm
+from django.urls import reverse
+from .models import Customer,Expences,OneTimePassword
+from .froms import RegistrationForm
+import random
+from .helper import MessageHandler
 # Create your views here.
 
 def logout_customer(request):
@@ -22,8 +25,8 @@ def Register(request):
             
             new_customer=Customer.objects.create(name=name,mobile=mobile,email=email,password=pass1)
             new_customer.save()
-            users=authenticate(email=email,username=name,password1=pass1)
-            login(request,users)
+            user=authenticate(email=email,username=name,password1=pass1)
+            login(request,user)
             return redirect('home')
         else:
             return render(request,'index.html',{'form':form})
@@ -34,6 +37,7 @@ def login_customer(request):
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["pass1"]
+        
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request, user)
@@ -136,3 +140,34 @@ def editExpence(request,id):
         'edit':Expences.objects.get(pk=id)
     }
     return render(request,'editExpence.html',context)
+
+
+def loginWithPhone(request):
+    if request.method == 'POST':
+        if Customer.objects.filter(mobile=request.POST['phone_number']).exists():
+            otp=random.randint(1000,9999)
+            customer=OneTimePassword.objects.create(mobile=request.POST['phone_number'],otp=f'{otp}')
+            if request.POST['methodOtp']:
+                messagehandler=MessageHandler(request.POST['phone_number'],otp).send_otp_via_message()
+            red=redirect(f'otp/{customer.uid}/')
+            red.set_cookie("can_otp_enter",True,max_age=600)
+            return red  
+        else:
+            messages.success(request,'This number not registered..')
+    return render(request,'login-with-phone.html')        
+        
+
+        
+def otpVerify(request,uid):
+    if request.method=="POST":
+        profile=OneTimePassword.objects.get(uid=uid)     
+        if request.COOKIES.get('can_otp_enter')!=None:
+            if(profile.otp==request.POST['otp']):
+                messages.warning(request,"Otp Verified Successfully")
+                red=redirect("home")
+                red.set_cookie('verified',True)
+                return red
+            messages.info(request,'Wrong otp enter')
+            return redirect('Lphone')
+        return HttpResponse("10 minutes passed")        
+    return render(request,"otp.html",{'id':uid})

@@ -13,4 +13,8 @@ urlpatterns=[
     path('addexpence',views.addExpence,name='addexpence'),
     path('editexpence/<int:id>',views.editExpence,name='editexpence'),
     path('delete/<int:id>',views.delete,name='delete'),
+    path('loginWithPhone',views.loginWithPhone,name='Lphone'),
+    path('otp/<str:uid>/', views.otpVerify, name='otp')
+    
+    
 ]
