@@ -7,6 +7,8 @@ from .models import Customer,Expences,OneTimePassword
 from .froms import RegistrationForm
 import random
 from .helper import MessageHandler
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 # Create your views here.
 
 def logout_customer(request):
@@ -37,7 +39,6 @@ def login_customer(request):
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["pass1"]
-        
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request, user)
@@ -49,26 +50,30 @@ def login_customer(request):
     else:
     # forms=RegistrationForm()
         return render(request,'login.html')
-
 def home(request):
     context={
         'customers':Customer.objects.all()
     }
     return render(request,'home.html',context)
 
+
+@login_required(login_url='login')
 def expence(request,id):
     context={
         'expences':Expences.objects.filter(c_name=id),
     }
     return render(request,'expence.html',context)
 
+
+@login_required(login_url='login')
 def delete(request,id):
     delete_data=Expences.objects.get(pk=id)
     delete_data.delete()
-    return redirect('home')
-
+    return HttpResponseRedirect(request.path_info)
 # Add a contact view
 
+
+@login_required(login_url='login')
 def addContact(request):
     if request.method == 'POST':
         name=request.POST['name']
@@ -86,6 +91,7 @@ def addContact(request):
 
 # Update Contact 
 
+@login_required(login_url='login')
 def editContact(request,id):
     if request.method == 'POST':
         new_name=request.POST['name']
@@ -105,6 +111,7 @@ def editContact(request,id):
 
 # Delete contact 
 
+@login_required(login_url='login')
 def deleteContact(request,id):
     dlt=Customer.objects.get(pk=id)
     dlt.delete()
@@ -113,6 +120,7 @@ def deleteContact(request,id):
 
     
 
+@login_required(login_url='login')
 def addExpence(request):
     Customer_name = Customer.objects.all()
     if request.method == 'POST':
@@ -122,10 +130,14 @@ def addExpence(request):
 
         new_expence=Expences.objects.create(expence=expence_title,amount=amount,c_name=Customer.objects.get(name=c_name))
         new_expence.save()
-        return redirect('home')
+        # return redirect('home')
+        messages.success(request,'expence added successfully')
+        return HttpResponseRedirect(request.path_info)
     
     return render(request,'addExpence.html',{'names':Customer_name})
 
+
+@login_required(login_url='login')
 def editExpence(request,id):
     edit=Expences.objects.get(pk=id)
     if request.method == 'POST':
@@ -160,14 +172,15 @@ def loginWithPhone(request):
         
 def otpVerify(request,uid):
     if request.method=="POST":
-        profile=OneTimePassword.objects.get(uid=uid)     
+        profile=OneTimePassword.objects.get(uid=uid)    
         if request.COOKIES.get('can_otp_enter')!=None:
             if(profile.otp==request.POST['otp']):
                 messages.warning(request,"Otp Verified Successfully")
                 red=redirect("home")
                 red.set_cookie('verified',True)
                 return red
-            messages.info(request,'Wrong otp enter')
-            return redirect('Lphone')
+            else:
+                messages.info(request,'Wrong otp enter')
+                return HttpResponseRedirect(request.path_info)
         return HttpResponse("10 minutes passed")        
     return render(request,"otp.html",{'id':uid})

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,6 +125,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR / 'static')
 ]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -131,7 +134,7 @@ STATICFILES_DIRS=[
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ACCOUNT_SID='AC10cda92258dc9bd28f5818a78441eaca'
-AUTH_TOKEN='cbd6b1de3890367970cebfca59662734'
+AUTH_TOKEN='5811a4db646058365e45292124e77462'
 COUNTRY_CODE='+91'
 TWILIO_WHATSAPP_NUMBER='whatsapp:+14155238886'
-TWILIO_PHONE_NUMBER='+16206789431'
+TWILIO_PHONE_NUMBER='+1 6206789431'

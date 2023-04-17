@@ -13,9 +13,9 @@ class Customer(models.Model):
         return self.name + self.mobile
 
 class OneTimePassword(models.Model):
-    mobile=models.CharField(max_length=12,unique=False)
+    mobile=models.CharField(max_length=12)
     otp=models.CharField(max_length=100,null=True,blank=True)
-    uid=models.CharField(default=f'{uuid.uuid4}',max_length=200)
+    uid=models.CharField(default=f'{uuid.uuid4}',max_length=200,null=True,blank=True)
     
     def __str__(self) -> str:
         return self.mobile + ' :  ' +self.otp
