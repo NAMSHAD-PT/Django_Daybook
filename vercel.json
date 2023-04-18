@@ -1,28 +1,26 @@
-
 {
     "version": 2,
     "builds": [
-      {
-        "src": "daybook/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "100mb", "runtime": "python3.10.4" }
-      },
-      {
-        "src": "build_files.sh",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "staticfiles_build"
+        {
+            "src": "daybook/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.9"
+            }
+        },
+        {
+            "src": "build_files.sh",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "staticfiles_build"
+            }
         }
-      }
     ],
     "routes": [
-      {
-        "src": "/static/(.*)",
-        "dest": "/static/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "daybook/wsgi.py"
-      }
+        {
+            "src": "/(.*)",
+            "dest": "daybook/wsgi.py"
+        }
     ]
-  }
+}
