@@ -75,15 +75,22 @@ WSGI_APPLICATION = 'daybook.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'daybook1',
-        'HOST':'localhost',
-        'USER':'root',
-        'PASSWORD':'',
-        'PORT':3306,
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "mydatabase",
     }
-}
+} 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'daybook1',
+#         'HOST':'localhost',
+#         'USER':'root',
+#         'PASSWORD':'',
+#         'PORT':3306,
+#     }
+# }
 
 
 # Password validation
