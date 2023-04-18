@@ -5,7 +5,7 @@
       {
         "src": "daybook/wsgi.py",
         "use": "@vercel/python",
-        "config": { "maxLambdaSize": "40mb", "runtime": "python3.9" }
+        "config": { "maxLambdaSize": "100mb", "runtime": "python3.10.4" }
       },
       {
         "src": "build_files.sh",
