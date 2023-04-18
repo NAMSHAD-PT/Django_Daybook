@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-u_a_$cjxkxwm9lb@z&0ah3ku_+c6&a$2@ta7sq$7s^tva!(1^p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','.vercel.app']
+# ALLOWED_HOSTS = ['127.0.0.1','.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
 
 
 # Application definition
@@ -75,24 +76,16 @@ WSGI_APPLICATION = 'daybook.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "mydatabase",
+    'default': {
+        'ENGINE': "django.db.backends.postgresql_psycopg2",
+        'HOST': "db.cygsityvdqvkjndyaphc.supabase.co",
+        'NAME': "postgres",
+        'USER': "postgres",
+        'PASSWORD': "basi@123#21",
+        'PORT': "5432",
+
     }
-} 
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'daybook1',
-#         'HOST':'localhost',
-#         'USER':'root',
-#         'PASSWORD':'',
-#         'PORT':3306,
-#     }
-# }
-
-
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -128,10 +121,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 import os
 STATIC_URL = 'static/'
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR / 'static')
-]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
